@@ -23,11 +23,23 @@ header{flex-shrink:0;height:50px;padding:0 14px;border-bottom:1px solid #1e1e22;
 .hdr-btn.ok{background:#0f1f0f;border-color:#2ecc71;color:#2ecc71;}
 .hdr-btn.accent{background:#0d1a2e;border-color:#3b82f6;color:#3b82f6;}
 .hdr-btn.accent:hover{background:#112240;border-color:#60a5fa;color:#60a5fa;}
+/* discord / donate */
 .discord-btn{background:#0e0f1f;border-color:#5865f2;color:#5865f2;text-decoration:none;}
 .discord-btn:hover{background:#151629;border-color:#7983f5;color:#7983f5;}
 .donate-btn{background:#1f1208;border-color:#e2b714;color:#e2b714;text-decoration:none;}
 .donate-btn:hover{background:#2a1a0a;border-color:#f0cc40;color:#f0cc40;}
 #donate-overlay.open{display:flex!important;}
+/* preview tab bar */
+#preview-tabs{flex-shrink:0;display:flex;align-items:flex-end;padding:10px 12px 0;background:#0d0d0f;gap:2px;}
+.tab-history-btns{margin-left:auto;display:flex;gap:4px;padding-bottom:2px;align-items:center;}
+.tab-vdivider{width:1px;height:16px;background:#2a2a2e;margin:0 2px;}
+.tab-bar-btn{background:#1c1c20!important;border-color:#383840!important;color:#bbb!important;font-size:9px!important;font-weight:700!important;}
+.tab-bar-btn:hover:not(:disabled){border-color:#666!important;color:#fff!important;background:#242428!important;}
+.tab-bar-btn:disabled{opacity:.3!important;cursor:not-allowed!important;}
+.export-tab-btn{background:#1e1e22!important;border-color:#555!important;color:#ccc!important;}
+.export-tab-btn:hover{background:#28282e!important;border-color:#888!important;color:#fff!important;}
+.export-tab-btn.ok{background:#0f1f0f!important;border-color:#2ecc71!important;color:#2ecc71!important;}
+.export-tab-btn .btn-txt,.export-tab-btn #exp-lbl{display:inline!important;}
 .hdr-divider{width:1px;height:18px;background:#1e1e22;flex-shrink:0;}
 .hist-badge{background:#1a1a1f;color:#444;font-size:7px;padding:1px 4px;border-radius:3px;min-width:14px;text-align:center;}
 
@@ -50,15 +62,7 @@ header{flex-shrink:0;height:50px;padding:0 14px;border-bottom:1px solid #1e1e22;
 
 /* ── PREVIEW ── */
 #preview-wrap{flex:1;min-height:0;display:flex;flex-direction:column;overflow:hidden;}
-#preview-tabs{flex-shrink:0;display:flex;align-items:flex-end;padding:10px 12px 0;background:#0d0d0f;gap:2px;}
-.tab-history-btns{margin-left:auto;display:flex;gap:4px;padding-bottom:2px;align-items:center;}
-.tab-vdivider{width:1px;height:16px;background:#2a2a2e;margin:0 2px;}
-.tab-bar-btn{background:#141416!important;border-color:#2a2a2e!important;color:#888!important;font-size:9px!important;}
-.tab-bar-btn:hover:not(:disabled){border-color:#555!important;color:#ccc!important;background:#1c1c1f!important;}
-.tab-bar-btn:disabled{opacity:.35!important;}
-.export-tab-btn{background:#0f1a10!important;border-color:#2ecc71!important;color:#2ecc71!important;}
-.export-tab-btn:hover{background:#142418!important;border-color:#4ade80!important;color:#4ade80!important;}
-.export-tab-btn.ok{background:#0f1f0f!important;border-color:#2ecc71!important;color:#2ecc71!important;}
+/* preview-tabs handled above */
 .ptab{padding:6px 14px;font-size:9px;letter-spacing:.06em;cursor:pointer;border-radius:6px 6px 0 0;border:1px solid transparent;color:#444;transition:all .15s;user-select:none;}
 .ptab:hover{color:#888;}
 .ptab.active{color:#ddd;border-color:#2a2a2e;border-bottom-color:#141416;background:#141416;}
@@ -96,15 +100,9 @@ header{flex-shrink:0;height:50px;padding:0 14px;border-bottom:1px solid #1e1e22;
 .custom-editor-wrap{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:8px;min-height:0;transition:all .2s;}
 .custom-editor-wrap.collapsed{display:none;}
 .editor-pane{display:flex;flex-direction:column;gap:4px;min-height:0;}
-.custom-result-wrap{flex:1;border-radius:8px;overflow:hidden;border:1px solid #1e1e22;min-height:0;transition:all .2s;}
+.custom-result-wrap{flex:1;border-radius:8px;overflow:hidden;border:1px solid #1e1e22;min-height:0;}
 #custom-preview.editors-collapsed .custom-result-wrap{flex:1;}
-.toggle-editor-btn{
-  background:#1a1a2e;border:1px solid #3b82f6;color:#3b82f6;
-  font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.06em;
-  padding:4px 10px;border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:5px;
-  transition:all .15s;white-space:nowrap;flex-shrink:0;font-weight:700;
-  box-shadow:0 0 8px rgba(59,130,246,.2);
-}
+.toggle-editor-btn{background:#1a1a2e;border:1px solid #3b82f6;color:#3b82f6;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.06em;padding:4px 10px;border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .15s;white-space:nowrap;flex-shrink:0;font-weight:700;box-shadow:0 0 8px rgba(59,130,246,.2);}
 .toggle-editor-btn:hover{background:#112240;border-color:#60a5fa;color:#60a5fa;box-shadow:0 0 12px rgba(59,130,246,.35);}
 #custom-preview.editors-collapsed .toggle-editor-btn{background:#0d1a2e;border-color:#3b82f6;color:#3b82f6;}
 .toggle-editor-btn .teb-arrow{display:inline-block;transition:transform .2s;font-style:normal;}
@@ -335,7 +333,7 @@ header{flex-shrink:0;height:50px;padding:0 14px;border-bottom:1px solid #1e1e22;
   .logo-sub{display:none;}
   .hdr-btn{padding:5px 6px;font-size:8px;}
   .btn-txt{display:none;}
-  .new-btn-txt{display:inline!important;}
+  .new-btn-txt,.export-tab-btn .btn-txt,.export-tab-btn #exp-lbl{display:inline!important;}
   .hist-badge{min-width:12px;}
   .hdr-divider{margin:0 1px;}
   .p-sidebar{width:85px;}
@@ -381,7 +379,7 @@ header{flex-shrink:0;height:50px;padding:0 14px;border-bottom:1px solid #1e1e22;
           <button class="hdr-btn tab-bar-btn" id="undo-btn" onclick="undo()" disabled>↩ <span class="btn-txt">UNDO</span> <span class="hist-badge" id="undo-badge">0</span></button>
           <button class="hdr-btn tab-bar-btn" id="redo-btn" onclick="redo()" disabled>↪ <span class="btn-txt">REDO</span> <span class="hist-badge" id="redo-badge">0</span></button>
           <div class="tab-vdivider"></div>
-          <button class="hdr-btn tab-bar-btn export-tab-btn" id="exp-btn" onclick="exportCSS()"><span id="exp-ico">⎘</span> <span id="exp-lbl" class="btn-txt">EXPORT</span></button>
+          <button class="hdr-btn tab-bar-btn export-tab-btn" id="exp-btn" onclick="exportCSS()"><span id="exp-ico">⎘</span> <span id="exp-lbl">EXPORT</span></button>
         </div>
       </div>
       <div id="mock-preview">
@@ -795,15 +793,18 @@ function applyCustom(keepOpen){
   const css=document.getElementById('css-editor').value;
   document.getElementById('custom-iframe').srcdoc=
     `<!DOCTYPE html><html><head><meta charset="UTF-8"/><style>${getThemeVarBlock()}${css}</style></head><body>${html}</body></html>`;
-  /* Auto-collapse editors so preview fills the space — unless opening for first time */
   if(!keepOpen){
     const cp=document.getElementById('custom-preview');
     const ew=document.querySelector('.custom-editor-wrap');
-    if(!cp.classList.contains('editors-collapsed')){
-      cp.classList.add('editors-collapsed');
-      ew.classList.add('collapsed');
-    }
+    if(!cp.classList.contains('editors-collapsed')){cp.classList.add('editors-collapsed');ew.classList.add('collapsed');}
   }
+}
+function toggleEditors(){
+  const cp=document.getElementById('custom-preview');
+  const ew=document.querySelector('.custom-editor-wrap');
+  const collapsed=cp.classList.toggle('editors-collapsed');
+  ew.classList.toggle('collapsed',collapsed);
+  _playSound('switch');
 }
 function maybeRefreshCustom(){if(currentTab==='custom')applyCustom();}
 
@@ -1184,25 +1185,14 @@ document.addEventListener('keydown',e=>{
   if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'){e.preventDefault();saveProject();}
 });
 
-/* ════ TOGGLE EDITOR PANELS ════ */
-function toggleEditors(){
-  const cp=document.getElementById('custom-preview');
-  const ew=document.querySelector('.custom-editor-wrap');
-  const collapsed=cp.classList.toggle('editors-collapsed');
-  ew.classList.toggle('collapsed',collapsed);
-  _playSound('switch');
-}
-
 /* ════ RENDER ALL ════ */
 function renderAll(){renderPaletteRow();renderPreview();renderControls();}
 renderAll();
 
 /* ════ SOUNDS ════ */
 const _ac=new(window.AudioContext||window.webkitAudioContext)();
-let _masterVol=0.15;
-
+let _masterVol=0.45;
 function _resumeAC(){if(_ac.state==='suspended')_ac.resume();}
-
 function _playSound(type){
   _resumeAC();
   const now=_ac.currentTime;
@@ -1210,134 +1200,64 @@ function _playSound(type){
   const masterG=_ac.createGain();
   masterG.gain.value=_masterVol/0.15;
   g.connect(masterG);masterG.connect(_ac.destination);
-
   if(type==='click'){
-    /* Short crisp tick — buttons, tabs, pills */
-    const o=_ac.createOscillator();
-    o.connect(g);
-    o.type='sine';
-    o.frequency.setValueAtTime(1100,now);
-    o.frequency.exponentialRampToValueAtTime(600,now+0.06);
-    g.gain.setValueAtTime(0.18,now);
-    g.gain.exponentialRampToValueAtTime(0.0001,now+0.07);
+    const o=_ac.createOscillator();o.connect(g);o.type='sine';
+    o.frequency.setValueAtTime(1100,now);o.frequency.exponentialRampToValueAtTime(600,now+0.06);
+    g.gain.setValueAtTime(0.18,now);g.gain.exponentialRampToValueAtTime(0.0001,now+0.07);
     o.start(now);o.stop(now+0.07);
-
   } else if(type==='swatch'){
-    /* Soft pop — color chip click */
-    const o=_ac.createOscillator();
-    o.connect(g);
-    o.type='sine';
-    o.frequency.setValueAtTime(520,now);
-    o.frequency.exponentialRampToValueAtTime(260,now+0.12);
-    g.gain.setValueAtTime(0.14,now);
-    g.gain.exponentialRampToValueAtTime(0.0001,now+0.13);
+    const o=_ac.createOscillator();o.connect(g);o.type='sine';
+    o.frequency.setValueAtTime(520,now);o.frequency.exponentialRampToValueAtTime(260,now+0.12);
+    g.gain.setValueAtTime(0.14,now);g.gain.exponentialRampToValueAtTime(0.0001,now+0.13);
     o.start(now);o.stop(now+0.13);
-
   } else if(type==='add'){
-    /* Rising chirp — add new item */
-    const o=_ac.createOscillator();
-    o.connect(g);
-    o.type='triangle';
-    o.frequency.setValueAtTime(500,now);
-    o.frequency.exponentialRampToValueAtTime(900,now+0.12);
-    g.gain.setValueAtTime(0.13,now);
-    g.gain.exponentialRampToValueAtTime(0.0001,now+0.14);
+    const o=_ac.createOscillator();o.connect(g);o.type='triangle';
+    o.frequency.setValueAtTime(500,now);o.frequency.exponentialRampToValueAtTime(900,now+0.12);
+    g.gain.setValueAtTime(0.13,now);g.gain.exponentialRampToValueAtTime(0.0001,now+0.14);
     o.start(now);o.stop(now+0.14);
-
   } else if(type==='delete'){
-    /* Falling thud — delete / remove */
-    const o=_ac.createOscillator();
-    o.connect(g);
-    o.type='sawtooth';
-    const f=_ac.createBiquadFilter();
-    f.type='lowpass';f.frequency.value=600;
-    o.connect(f);f.connect(g);
-    o.frequency.setValueAtTime(320,now);
-    o.frequency.exponentialRampToValueAtTime(80,now+0.15);
-    g.gain.setValueAtTime(0.12,now);
-    g.gain.exponentialRampToValueAtTime(0.0001,now+0.16);
+    const o=_ac.createOscillator();o.connect(g);o.type='sawtooth';
+    o.frequency.setValueAtTime(320,now);o.frequency.exponentialRampToValueAtTime(80,now+0.15);
+    g.gain.setValueAtTime(0.12,now);g.gain.exponentialRampToValueAtTime(0.0001,now+0.16);
     o.start(now);o.stop(now+0.16);
-
   } else if(type==='switch'){
-    /* Quick double-blip — palette / tab switch */
     [0,0.07].forEach((delay,i)=>{
-      const o=_ac.createOscillator();
-      const gg=_ac.createGain();
-      o.connect(gg);gg.connect(masterG);
-      o.type='sine';
+      const o=_ac.createOscillator();const gg=_ac.createGain();
+      o.connect(gg);gg.connect(masterG);o.type='sine';
       o.frequency.value=i===0?780:1020;
-      gg.gain.setValueAtTime(0.12,now+delay);
-      gg.gain.exponentialRampToValueAtTime(0.0001,now+delay+0.06);
+      gg.gain.setValueAtTime(0.12,now+delay);gg.gain.exponentialRampToValueAtTime(0.0001,now+delay+0.06);
       o.start(now+delay);o.stop(now+delay+0.06);
     });
-
   } else if(type==='save'){
-    /* Bright ding — save / export success */
     [0,0.09,0.18].forEach((delay,i)=>{
       const freqs=[880,1100,1320];
-      const o=_ac.createOscillator();
-      const gg=_ac.createGain();
-      o.connect(gg);gg.connect(masterG);
-      o.type='sine';
-      o.frequency.value=freqs[i];
-      gg.gain.setValueAtTime(0.13,now+delay);
-      gg.gain.exponentialRampToValueAtTime(0.0001,now+delay+0.18);
+      const o=_ac.createOscillator();const gg=_ac.createGain();
+      o.connect(gg);gg.connect(masterG);o.type='sine';o.frequency.value=freqs[i];
+      gg.gain.setValueAtTime(0.13,now+delay);gg.gain.exponentialRampToValueAtTime(0.0001,now+delay+0.18);
       o.start(now+delay);o.stop(now+delay+0.2);
     });
-
   } else if(type==='modal'){
-    /* Soft whoosh — modal open */
-    const o=_ac.createOscillator();
-    o.connect(g);
-    o.type='sine';
-    o.frequency.setValueAtTime(200,now);
-    o.frequency.exponentialRampToValueAtTime(440,now+0.1);
-    g.gain.setValueAtTime(0.08,now);
-    g.gain.exponentialRampToValueAtTime(0.0001,now+0.12);
+    const o=_ac.createOscillator();o.connect(g);o.type='sine';
+    o.frequency.setValueAtTime(200,now);o.frequency.exponentialRampToValueAtTime(440,now+0.1);
+    g.gain.setValueAtTime(0.08,now);g.gain.exponentialRampToValueAtTime(0.0001,now+0.12);
     o.start(now);o.stop(now+0.12);
   }
 }
-
-/* ── Wire up sounds via event delegation ── */
 document.addEventListener('pointerdown',e=>{
   const t=e.target;
-
-  /* Color swatch */
   if(t.classList.contains('chip-swatch')){_playSound('swatch');return;}
-
-  /* Delete chip / delete theme / confirm delete */
   if(t.classList.contains('chip-del')||t.classList.contains('confirm-delete')||t.id==='modal-delete-btn'){_playSound('delete');return;}
-
-  /* Add new var / add palette pill */
   if(t.id==='add-var-btn'||t.closest('#add-var-btn')||t.classList.contains('add-pill')){_playSound('add');return;}
-
-  /* Palette pill switch */
   if(t.classList.contains('pal-pill')||t.closest('.pal-pill')){_playSound('switch');return;}
-
-  /* Preview tab switch */
   if(t.classList.contains('ptab')){_playSound('switch');return;}
-
-  /* Export / save success buttons */
   if(t.id==='exp-btn'||t.closest('#exp-btn')||t.id==='save-btn'||t.closest('#save-btn')){_playSound('save');return;}
-
-  /* Modal open triggers */
   if(t.closest('.pill-edit')||t.id==='new-theme-btn'||t.closest('#new-theme-btn')){_playSound('modal');return;}
-
-  /* Any other button / interactive element */
-  if(t.tagName==='BUTTON'||t.closest('button')||t.classList.contains('hdr-btn')||t.closest('.hdr-btn')||t.classList.contains('flip-btn')||t.closest('.flip-btn')||t.classList.contains('np-opt')||t.classList.contains('proj-btn')){
-    _playSound('click');
-  }
+  if(t.tagName==='BUTTON'||t.closest('button')||t.classList.contains('hdr-btn')||t.closest('.hdr-btn')||t.classList.contains('flip-btn')||t.closest('.flip-btn')||t.classList.contains('np-opt')||t.classList.contains('proj-btn')){_playSound('click');}
 },true);
 
 /* ════ DONATE POPUP ════ */
-function showDonatePopup(e){
-  e.preventDefault();
-  document.getElementById('donate-overlay').classList.add('open');
-  _playSound('modal');
-}
-function closeDonatePopup(){
-  document.getElementById('donate-overlay').classList.remove('open');
-}
+function showDonatePopup(e){e.preventDefault();document.getElementById('donate-overlay').classList.add('open');_playSound('modal');}
+function closeDonatePopup(){document.getElementById('donate-overlay').classList.remove('open');}
 document.addEventListener('keydown',ev=>{
   if(ev.key==='Escape'&&document.getElementById('donate-overlay').classList.contains('open'))closeDonatePopup();
 });
