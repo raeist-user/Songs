@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
-<title>DevThemez</title>
+<title>Devthemez</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
@@ -80,8 +80,22 @@ header{flex-shrink:0;height:50px;padding:0 14px;border-bottom:1px solid #1e1e22;
 #custom-preview.active{display:flex;}
 .custom-toolbar{display:flex;gap:6px;align-items:center;flex-shrink:0;flex-wrap:wrap;}
 .custom-toolbar-label{font-size:9px;color:#444;letter-spacing:.05em;flex:1;}
-.custom-editor-wrap{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:8px;min-height:0;}
+.custom-editor-wrap{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:8px;min-height:0;transition:all .2s;}
+.custom-editor-wrap.collapsed{display:none;}
 .editor-pane{display:flex;flex-direction:column;gap:4px;min-height:0;}
+.custom-result-wrap{flex:1;border-radius:8px;overflow:hidden;border:1px solid #1e1e22;min-height:0;transition:all .2s;}
+#custom-preview.editors-collapsed .custom-result-wrap{flex:1;}
+.toggle-editor-btn{
+  background:#1a1a2e;border:1px solid #3b82f6;color:#3b82f6;
+  font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.06em;
+  padding:4px 10px;border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:5px;
+  transition:all .15s;white-space:nowrap;flex-shrink:0;font-weight:700;
+  box-shadow:0 0 8px rgba(59,130,246,.2);
+}
+.toggle-editor-btn:hover{background:#112240;border-color:#60a5fa;color:#60a5fa;box-shadow:0 0 12px rgba(59,130,246,.35);}
+#custom-preview.editors-collapsed .toggle-editor-btn{background:#0d1a2e;border-color:#3b82f6;color:#3b82f6;}
+.toggle-editor-btn .teb-arrow{display:inline-block;transition:transform .2s;font-style:normal;}
+#custom-preview.editors-collapsed .teb-arrow{transform:rotate(180deg);}
 .editor-label{font-size:8px;color:#444;letter-spacing:.08em;font-weight:700;flex-shrink:0;}
 .code-editor{flex:1;background:#0f0f11;border:1px solid #1e1e22;border-radius:8px;color:#c0c0c8;font-family:'JetBrains Mono',monospace;font-size:11px;padding:10px;outline:none;resize:none;line-height:1.6;tab-size:2;overflow:auto;}
 .code-editor:focus{border-color:#2a2a3a;}
@@ -353,6 +367,7 @@ header{flex-shrink:0;height:50px;padding:0 14px;border-bottom:1px solid #1e1e22;
       <div id="custom-preview">
         <div class="custom-toolbar">
           <span class="custom-toolbar-label">PASTE HTML &amp; CSS — ALL YOUR VARS ARE AUTO-INJECTED</span>
+          <button class="toggle-editor-btn" onclick="toggleEditors()" title="Toggle editor panels"><i class="teb-arrow">▲</i> EDITOR</button>
           <button class="hdr-btn ok" onclick="applyCustom()">▶ APPLY</button>
         </div>
         <div class="custom-editor-wrap">
@@ -757,6 +772,13 @@ function applyCustom(){
   const css=document.getElementById('css-editor').value;
   document.getElementById('custom-iframe').srcdoc=
     `<!DOCTYPE html><html><head><meta charset="UTF-8"/><style>${getThemeVarBlock()}${css}</style></head><body>${html}</body></html>`;
+  /* Auto-collapse editors so preview fills the space */
+  const cp=document.getElementById('custom-preview');
+  const ew=document.querySelector('.custom-editor-wrap');
+  if(!cp.classList.contains('editors-collapsed')){
+    cp.classList.add('editors-collapsed');
+    ew.classList.add('collapsed');
+  }
 }
 function maybeRefreshCustom(){if(currentTab==='custom')applyCustom();}
 
@@ -1137,9 +1159,150 @@ document.addEventListener('keydown',e=>{
   if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'){e.preventDefault();saveProject();}
 });
 
+/* ════ TOGGLE EDITOR PANELS ════ */
+function toggleEditors(){
+  const cp=document.getElementById('custom-preview');
+  const ew=document.querySelector('.custom-editor-wrap');
+  const collapsed=cp.classList.toggle('editors-collapsed');
+  ew.classList.toggle('collapsed',collapsed);
+  _playSound('switch');
+}
+
 /* ════ RENDER ALL ════ */
 function renderAll(){renderPaletteRow();renderPreview();renderControls();}
 renderAll();
+
+/* ════ SOUNDS ════ */
+const _ac=new(window.AudioContext||window.webkitAudioContext)();
+let _masterVol=0.15;
+
+function _resumeAC(){if(_ac.state==='suspended')_ac.resume();}
+
+function _playSound(type){
+  _resumeAC();
+  const now=_ac.currentTime;
+  const g=_ac.createGain();
+  const masterG=_ac.createGain();
+  masterG.gain.value=_masterVol/0.15;
+  g.connect(masterG);masterG.connect(_ac.destination);
+
+  if(type==='click'){
+    /* Short crisp tick — buttons, tabs, pills */
+    const o=_ac.createOscillator();
+    o.connect(g);
+    o.type='sine';
+    o.frequency.setValueAtTime(1100,now);
+    o.frequency.exponentialRampToValueAtTime(600,now+0.06);
+    g.gain.setValueAtTime(0.18,now);
+    g.gain.exponentialRampToValueAtTime(0.0001,now+0.07);
+    o.start(now);o.stop(now+0.07);
+
+  } else if(type==='swatch'){
+    /* Soft pop — color chip click */
+    const o=_ac.createOscillator();
+    o.connect(g);
+    o.type='sine';
+    o.frequency.setValueAtTime(520,now);
+    o.frequency.exponentialRampToValueAtTime(260,now+0.12);
+    g.gain.setValueAtTime(0.14,now);
+    g.gain.exponentialRampToValueAtTime(0.0001,now+0.13);
+    o.start(now);o.stop(now+0.13);
+
+  } else if(type==='add'){
+    /* Rising chirp — add new item */
+    const o=_ac.createOscillator();
+    o.connect(g);
+    o.type='triangle';
+    o.frequency.setValueAtTime(500,now);
+    o.frequency.exponentialRampToValueAtTime(900,now+0.12);
+    g.gain.setValueAtTime(0.13,now);
+    g.gain.exponentialRampToValueAtTime(0.0001,now+0.14);
+    o.start(now);o.stop(now+0.14);
+
+  } else if(type==='delete'){
+    /* Falling thud — delete / remove */
+    const o=_ac.createOscillator();
+    o.connect(g);
+    o.type='sawtooth';
+    const f=_ac.createBiquadFilter();
+    f.type='lowpass';f.frequency.value=600;
+    o.connect(f);f.connect(g);
+    o.frequency.setValueAtTime(320,now);
+    o.frequency.exponentialRampToValueAtTime(80,now+0.15);
+    g.gain.setValueAtTime(0.12,now);
+    g.gain.exponentialRampToValueAtTime(0.0001,now+0.16);
+    o.start(now);o.stop(now+0.16);
+
+  } else if(type==='switch'){
+    /* Quick double-blip — palette / tab switch */
+    [0,0.07].forEach((delay,i)=>{
+      const o=_ac.createOscillator();
+      const gg=_ac.createGain();
+      o.connect(gg);gg.connect(masterG);
+      o.type='sine';
+      o.frequency.value=i===0?780:1020;
+      gg.gain.setValueAtTime(0.12,now+delay);
+      gg.gain.exponentialRampToValueAtTime(0.0001,now+delay+0.06);
+      o.start(now+delay);o.stop(now+delay+0.06);
+    });
+
+  } else if(type==='save'){
+    /* Bright ding — save / export success */
+    [0,0.09,0.18].forEach((delay,i)=>{
+      const freqs=[880,1100,1320];
+      const o=_ac.createOscillator();
+      const gg=_ac.createGain();
+      o.connect(gg);gg.connect(masterG);
+      o.type='sine';
+      o.frequency.value=freqs[i];
+      gg.gain.setValueAtTime(0.13,now+delay);
+      gg.gain.exponentialRampToValueAtTime(0.0001,now+delay+0.18);
+      o.start(now+delay);o.stop(now+delay+0.2);
+    });
+
+  } else if(type==='modal'){
+    /* Soft whoosh — modal open */
+    const o=_ac.createOscillator();
+    o.connect(g);
+    o.type='sine';
+    o.frequency.setValueAtTime(200,now);
+    o.frequency.exponentialRampToValueAtTime(440,now+0.1);
+    g.gain.setValueAtTime(0.08,now);
+    g.gain.exponentialRampToValueAtTime(0.0001,now+0.12);
+    o.start(now);o.stop(now+0.12);
+  }
+}
+
+/* ── Wire up sounds via event delegation ── */
+document.addEventListener('pointerdown',e=>{
+  const t=e.target;
+
+  /* Color swatch */
+  if(t.classList.contains('chip-swatch')){_playSound('swatch');return;}
+
+  /* Delete chip / delete theme / confirm delete */
+  if(t.classList.contains('chip-del')||t.classList.contains('confirm-delete')||t.id==='modal-delete-btn'){_playSound('delete');return;}
+
+  /* Add new var / add palette pill */
+  if(t.id==='add-var-btn'||t.closest('#add-var-btn')||t.classList.contains('add-pill')){_playSound('add');return;}
+
+  /* Palette pill switch */
+  if(t.classList.contains('pal-pill')||t.closest('.pal-pill')){_playSound('switch');return;}
+
+  /* Preview tab switch */
+  if(t.classList.contains('ptab')){_playSound('switch');return;}
+
+  /* Export / save success buttons */
+  if(t.id==='exp-btn'||t.closest('#exp-btn')||t.id==='save-btn'||t.closest('#save-btn')){_playSound('save');return;}
+
+  /* Modal open triggers */
+  if(t.closest('.pill-edit')||t.id==='new-theme-btn'||t.closest('#new-theme-btn')){_playSound('modal');return;}
+
+  /* Any other button / interactive element */
+  if(t.tagName==='BUTTON'||t.closest('button')||t.classList.contains('hdr-btn')||t.closest('.hdr-btn')||t.classList.contains('flip-btn')||t.closest('.flip-btn')||t.classList.contains('np-opt')||t.classList.contains('proj-btn')){
+    _playSound('click');
+  }
+},true);
 </script>
 </body>
 </html>
