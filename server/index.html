@@ -760,24 +760,26 @@ function switchTab(tab){
   document.getElementById('tab-custom').classList.toggle('active',tab==='custom');
   document.getElementById('mock-preview').classList.toggle('hidden',tab==='custom');
   document.getElementById('custom-preview').classList.toggle('active',tab==='custom');
-  if(tab==='custom')applyCustom();
+  if(tab==='custom')applyCustom(true);
 }
 
 /* ════ CUSTOM PREVIEW ════ */
 function getThemeVarBlock(){
   return ':root{'+activeVars().map(v=>`${v.name}:${v.value}`).join(';')+';}';
 }
-function applyCustom(){
+function applyCustom(keepOpen){
   const html=document.getElementById('html-editor').value;
   const css=document.getElementById('css-editor').value;
   document.getElementById('custom-iframe').srcdoc=
     `<!DOCTYPE html><html><head><meta charset="UTF-8"/><style>${getThemeVarBlock()}${css}</style></head><body>${html}</body></html>`;
-  /* Auto-collapse editors so preview fills the space */
-  const cp=document.getElementById('custom-preview');
-  const ew=document.querySelector('.custom-editor-wrap');
-  if(!cp.classList.contains('editors-collapsed')){
-    cp.classList.add('editors-collapsed');
-    ew.classList.add('collapsed');
+  /* Auto-collapse editors so preview fills the space — unless opening for first time */
+  if(!keepOpen){
+    const cp=document.getElementById('custom-preview');
+    const ew=document.querySelector('.custom-editor-wrap');
+    if(!cp.classList.contains('editors-collapsed')){
+      cp.classList.add('editors-collapsed');
+      ew.classList.add('collapsed');
+    }
   }
 }
 function maybeRefreshCustom(){if(currentTab==='custom')applyCustom();}
